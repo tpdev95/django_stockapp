@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+  <p>Hello {{ user.username}}</p>
+    {% if api %}
+        {% if api == "Error" %}
+            There was a problem
+        {% else %}
+          <<h1>{{ api.companyName }}</h1><br/>
+          Price: ${{ api.latestPrice }}<br/>
+          Previous Close: ${{ api.previousClose }}<br/>
+          Market Cap: ${{ api.marketCap }}<br/>
+          Year To Day Change: ${{ api.ytdChange }}<br/>
+          52 Wk  High: ${{ api.week52High }}<br/>
+          52 Wk Low: ${{ api.week52Low }}<br/>
+
+        <!-- {% for key,value in api.items %}
+            {{key}}:{{value}}<br/>
+        {% endfor %} -->
+        {% endif %}
+    {% endif %}
+{% else %}
+
+<div class="alert alert-danger" role="alert">
+<h4 class="alert-heading">Authentication Error</h4>
+<p>You have to logged in first.</p>
+<hr>
+<p class="mb-0">Stock Quotes  can only accessed by a registered user. <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a></p>
+</div>
+{% endif %}
+{% endblock %}
